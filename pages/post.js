@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Header";
 import {
   SearchIcon,
@@ -18,7 +18,7 @@ const post = () => {
           <h3 className="text-mainblue text-lg font-medium mb-5 ml-5">Post</h3>
         </div>
 
-        <div className="max-w-3xl flex space-x-5 px-5 lg:px-0 mt-5 sm:mt-0">
+        <div className="max-w-3xl block sm:flex sm:space-x-5 px-5 lg:px-0 mt-5 sm:mt-0 h-96">
           <div className="left-box flex-half">
             <label htmlFor="file-up">
               <div
@@ -44,7 +44,7 @@ const post = () => {
             <div className="relative">
               <div
                 alt=""
-                className="up-img h-44 w-64 object-cover rounded-md bg-cover bg-center"
+                className="up-img h-96 sm:h-44 w-full sm:w-64 object-cover rounded-md bg-cover bg-center mb-5"
                 style={{
                   backgroundImage:
                     "url(https://images.unsplash.com/photo-1548247416-ec66f4900b2e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Y2F0fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60)",
@@ -59,7 +59,7 @@ const post = () => {
             </div>
           </div>
 
-          <div className="flex-half">
+          <div className="flex-half mb-5">
             <textarea
               placeholder="Write something here"
               cols="5"

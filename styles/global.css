@@ -18,3 +18,7 @@
 body {
   background-color: #f3f4f6;
 }
+
+.react-responsive-modal-modal {
+  border-radius: 10px;
+}

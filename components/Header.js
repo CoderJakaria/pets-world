@@ -19,11 +19,14 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/solid";
 
+import { signIn, signOut, useSession } from "next-auth/client";
+
 const Header = ({ pagename, backIcon, searchBox }) => {
+  const [session, loading] = useSession();
   const router = useRouter();
 
   return (
-    <header className="sticky top-0">
+    <header className="sticky top-0 z-50">
       {/* this is for big screen */}
       <div className="hidden sm:block bg-mainblue sticky top-0 z-50">
         <div className="max-w-6xl mx-5 lg:mx-auto py-4 flex items-center justify-between">
@@ -89,7 +92,21 @@ const Header = ({ pagename, backIcon, searchBox }) => {
               <SearchIcon className="h-5 w-5 text-gray-500" />
             </div>
 
-            <UserIcon className="h-5 w-5 text-gray-500" />
+            {session ? (
+              <img
+                src={session.user.image}
+                alt=""
+                className="w-8 h-8 rounded-full object-cover cursor-pointer"
+                onClick={() => {
+                  router.push("/profile");
+                }}
+              />
+            ) : (
+              <UserIcon
+                className="h-5 w-5 text-gray-500 cursor-pointer"
+                onClick={signIn}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -123,11 +140,21 @@ const Header = ({ pagename, backIcon, searchBox }) => {
           <h3 className="text-white text-sm font-medium">{pagename}</h3>
         )}
 
-        <img
-          src="https://images.unsplash.com/photo-1586083702768-190ae093d34d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8bWFufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-          alt=""
-          className="w-8 h-8 rounded-full object-cover"
-        />
+        {session ? (
+          <img
+            src={session.user.image}
+            alt=""
+            className="w-8 h-8 rounded-full object-cover cursor-pointer"
+            onClick={() => {
+              router.push("/profile");
+            }}
+          />
+        ) : (
+          <UserIcon
+            className="h-5 w-5 text-gray-500 cursor-pointer"
+            onClick={signIn}
+          />
+        )}
       </div>
 
       {/*this is for mobile Bottom */}
