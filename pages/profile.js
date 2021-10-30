@@ -4,6 +4,7 @@ import ProfilePopup from "../components/profile-page/ProfilePopup";
 import { PencilAltIcon } from "@heroicons/react/solid";
 import { SearchIcon } from "@heroicons/react/outline";
 import IconInput from "../components/profile-page/IconInput";
+import { signOut, useSession } from "next-auth/client";
 
 const profile = () => {
   const [isPopup, setIsPopup] = useState(false);
@@ -154,7 +155,7 @@ const profile = () => {
 
         <button
           className={`bg-mainblue w-full text-white p-2 rounded-lg font-medium`}
-          type="submit"
+          onClick={signOut}
         >
           Save
         </button>

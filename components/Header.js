@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -20,15 +20,17 @@ import {
 } from "@heroicons/react/solid";
 
 import { signIn, signOut, useSession } from "next-auth/client";
+import UserDropdown from "./UserDropdown";
 
 const Header = ({ pagename, backIcon, searchBox }) => {
+  const [showdropdown, setShowdropdown] = useState(false);
   const [session, loading] = useSession();
   const router = useRouter();
 
   return (
     <header className="sticky top-0 z-50">
       {/* this is for big screen */}
-      <div className="hidden sm:block bg-mainblue sticky top-0 z-50">
+      <div className="hidden sm:block bg-mainblue sticky top-0 z-50 shadow-lg">
         <div className="max-w-6xl mx-5 lg:mx-auto py-4 flex items-center justify-between">
           <div>
             <Link href="/">
@@ -57,20 +59,20 @@ const Header = ({ pagename, backIcon, searchBox }) => {
                 </Link>
               </li>
               <li>
-                <a
+                <Link
                   href="#"
                   className="hover:underline text-gray-700 text-sm hover:text-white transition duration-200"
                 >
                   Found
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   href="#"
                   className="hover:underline text-gray-700 text-sm hover:text-white transition duration-200"
                 >
                   Adopt
-                </a>
+                </Link>
               </li>
               <li>
                 <Link
@@ -93,14 +95,15 @@ const Header = ({ pagename, backIcon, searchBox }) => {
             </div>
 
             {session ? (
-              <img
-                src={session.user.image}
-                alt=""
-                className="w-8 h-8 rounded-full object-cover cursor-pointer"
-                onClick={() => {
-                  router.push("/profile");
-                }}
-              />
+              <div className="relative">
+                <img
+                  src={session.user.image}
+                  alt=""
+                  className="w-8 h-8 rounded-full object-cover cursor-pointer group"
+                  onClick={() => setShowdropdown(!showdropdown)}
+                />
+                {showdropdown && <UserDropdown />}
+              </div>
             ) : (
               <UserIcon
                 className="h-5 w-5 text-gray-500 cursor-pointer"
@@ -112,7 +115,7 @@ const Header = ({ pagename, backIcon, searchBox }) => {
       </div>
 
       {/* this is for mobile top */}
-      <div className="sm:hidden flex items-center justify-between bg-mainblue py-2 px-2 ">
+      <div className="sm:hidden flex items-center justify-between bg-mainblue py-2 px-2 shadow-lg">
         <div>
           {backIcon ? (
             <ChevronLeftIcon
@@ -141,14 +144,15 @@ const Header = ({ pagename, backIcon, searchBox }) => {
         )}
 
         {session ? (
-          <img
-            src={session.user.image}
-            alt=""
-            className="w-8 h-8 rounded-full object-cover cursor-pointer"
-            onClick={() => {
-              router.push("/profile");
-            }}
-          />
+          <div className="relative">
+            <img
+              src={session.user.image}
+              alt=""
+              className="w-8 h-8 rounded-full object-cover cursor-pointer group"
+              onClick={() => setShowdropdown(!showdropdown)}
+            />
+            {showdropdown && <UserDropdown />}
+          </div>
         ) : (
           <UserIcon
             className="h-5 w-5 text-gray-500 cursor-pointer"
